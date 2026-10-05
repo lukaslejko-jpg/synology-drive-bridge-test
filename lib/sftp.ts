@@ -1,0 +1,3 @@
+import SftpClient from "ssh2-sftp-client";
+export function config(){return {host:process.env.SYNOLOGY_HOST||"",port:Number(process.env.SFTP_PORT||process.env.SYNOLOGY_PORT||22),username:process.env.SYNOLOGY_USER||"",password:process.env.SYNOLOGY_PASSWORD||"",privateKey:process.env.SYNOLOGY_PRIVATE_KEY?.replace(/\\\\n/g,"\\n"),passphrase:process.env.SYNOLOGY_PRIVATE_KEY_PASSPHRASE||undefined};}
+export async function withSftp<T>(fn:(s:SftpClient)=>Promise<T>){const c=config();if(!c.host||!c.username||(!c.password&&!c.privateKey))throw new Error("Missing Synology credentials");const s=new SftpClient();try{await s.connect({...c,readyTimeout:15000});return await fn(s)}finally{await s.end().catch(()=>{})}}
