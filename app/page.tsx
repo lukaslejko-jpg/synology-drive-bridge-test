@@ -1,0 +1,1 @@
+export default function Home(){return <main><h1>Synology Drive Bridge TEST</h1><p>Izolovaný projekt mimo europrojekty.</p><p><a href="/api/health">/api/health</a> — SFTP health check</p><p><a href="/api/test-write">/api/test-write</a> — vytvorí a overí testovací súbor na Synology</p></main>}
